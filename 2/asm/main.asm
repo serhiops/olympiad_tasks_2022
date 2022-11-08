@@ -1,4 +1,3 @@
-;flat assembler  version 1.73.30
 format PE Console 4.0
 
 include 'win32a.inc'
@@ -17,7 +16,6 @@ section '.data' data readable writable
     full_stores rd 1
     remainder_stores  rd 1
 
-    printD db '%d',0
     resultStr db '%d %d %d',0
     scanStr db '%d %d %d %d %d',0
     
@@ -41,21 +39,21 @@ section '.code' code readable executable
 start:
     invoke scanf,scanStr, boxes, cases, cartridges_in_cases, guns, cartridges_in_store 
     
-    ;умножение присваивание переменной total
+    ;total cartridges
     mov  eax,[boxes]
     mul  [cases]
     mul  [cartridges_in_cases]
     
     mov  [total_cartridges], eax
     
-    ;ищем количество полных магазинов для каждого автомата
+    ;full stores
     mov  edx, 0
     div  [guns]
     mov  edx, 0
     div  [cartridges_in_store]
     mov  [full_stores], eax
     
-    ;ищем остаток полных магазинов (в eax уже лежит значение full_stores)
+    ;remainder stores
     mul  [guns]
     mul  [cartridges_in_store]
     
@@ -66,7 +64,7 @@ start:
     div  [cartridges_in_store]
     mov  [remainder_stores], eax
     
-    ;ищем остаток патронов
+    ;remainder cartridges 
     mul [cartridges_in_store]
     mov [total_cartridges], eax
     sub ecx,[total_cartridges] 
@@ -74,4 +72,5 @@ start:
     invoke printf,resultStr,[full_stores],[remainder_stores], ecx  
     
     invoke getch
-    invoke ExitProcess, NULL            
+    invoke ExitProcess, NULL    
+     
