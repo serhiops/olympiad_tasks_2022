@@ -74,19 +74,4 @@ start:
     invoke printf,resultStr,[full_stores],[remainder_stores], ecx  
     
     invoke getch
-    invoke ExitProcess, NULL    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-        
+    invoke ExitProcess, NULL            
