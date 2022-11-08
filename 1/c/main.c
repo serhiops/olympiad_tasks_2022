@@ -4,10 +4,9 @@
 
 const char* vowels = { "aeiouy" };
 const char* consonants = { "bcdfghjklmnpqrstvwxz" };
-
 char result[] = {""};
 
-size_t countOfCharacter(const char* str1,const char* str2,const char symbol)
+bool countOfCharacter(const char* str1,const char* str2,const char symbol)
 {
     unsigned short counter1 = 0;
     unsigned short counter2 = 0;
@@ -22,11 +21,17 @@ size_t countOfCharacter(const char* str1,const char* str2,const char symbol)
     return counter1 > counter2;
 }
 
+void toLowerCase(char* str)
+{
+    for(size_t i=0;i<strlen(str);++i)
+        str[i] = tolower(str[i]);
+}
+
 void combinations(int k,const char* word,const char* s)
 {
     if(k == 0){
         bool isGood = true;
-        for(int i = 0; i< strlen(s) - 1; ++i)
+        for(size_t i = 0; i< strlen(s) - 1; ++i)
         {
             if(strchr(vowels, s[i]) && strchr(vowels, s[i+1]) ||
                strchr(consonants, s[i]) && strchr(consonants, s[i+1]) ||
@@ -42,7 +47,7 @@ void combinations(int k,const char* word,const char* s)
         }
     }
     else{
-        for(int i = 0; i < strlen(word);++i)
+        for(size_t i = 0; i < strlen(word);++i)
         {
             char data[strlen(s) + 2];
             strcpy(data, s);
@@ -58,6 +63,7 @@ int main(int argc, char** argv)
     char str[20];
     int k;
     scanf("%s %d", str, &k);
+    toLowerCase(str);
     char s[] = {""};
     combinations(k, str, s);
     printf("%s", result);
